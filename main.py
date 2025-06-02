@@ -69,9 +69,4 @@ except Exception as e:
     log(f'error: {e} ', 3)
     sys.exit()
 
-#test
-#double test
-#triple test
-###quad test
-###############newtest
-#FINALTEST
+#@
