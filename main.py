@@ -55,12 +55,13 @@ def mainloop() -> None:
             log('quitting program... ',1)
             sys.exit()
 
-try:
-    if __name__ == '__main__':
+
+if __name__ == '__main__':
+    try:
         mainloop()
-except KeyboardInterrupt:
-    log('\nprogram was manually shutdown', 2)
-    sys.exit()
-except Exception as e:
-    log(f'error: {e} ', 3)
-    sys.exit()
+    except KeyboardInterrupt:
+        log('\nprogram was manually shutdown', 2)
+        sys.exit()
+    except Exception as e:
+        log(f'error: {e} ', 3)
+        sys.exit()
