@@ -64,5 +64,3 @@ except KeyboardInterrupt:
 except Exception as e:
     log(f'error: {e} ', 3)
     sys.exit()
-
-#confirmaldis
