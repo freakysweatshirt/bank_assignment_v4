@@ -1,6 +1,6 @@
 from .utils import log
 import json
-accounts_path = 'saved\\accounts.json'
+accounts_path = 'accounts.json'
 def get_accounts() -> dict:
     try: 
         with open(accounts_path, 'r') as f:
