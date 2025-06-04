@@ -1,9 +1,10 @@
-from .imports import get_accounts, setpassword, log, save_accounts
-
+from .imports import  setpassword, log
+from .savefunctions import get_accounts, save_accounts
+from .storing import *
 
 def authenticate(username, password) -> bool:
     accounts = get_accounts()
-    if username in accounts and accounts[username]['password'] == password:
+    if username in accounts and hashpass(accounts[username]['password']) == password:
         return True
     return False
 
@@ -28,12 +29,14 @@ def create_account() -> None:
                 continue
 
             accounts = get_accounts()
-            accounts[username] = { 'password': password, 'balance': balance}
+            accounts[username] = { 'password': password, 'balance': encrypt(str(balance))}
             save_accounts(accounts)
 
             log('account successfully created ', 1)
             break
-
+        except ValueError:
+            log('balance must be a number ', 2)
+            continue
         except Exception as e: 
             log(f'error: {e} ', 3)
             break
@@ -43,13 +46,13 @@ def deposit(username) -> None:
     while True:
         accounts = get_accounts()
         try:
-            log(f'current balance: {accounts[username]['balance']} ', 2)
+            log(f'current balance: {decrypt(accounts[username]['balance'])} ', 2)
             deposit = int(input('money to deposit >> '))
             if deposit <= 0:
                 log('number must be over 0 ', 2)
                 continue
-            new_balance = accounts[username]['balance'] + deposit
-            accounts[username]['balance'] = new_balance
+            new_balance = int(decrypt(accounts[username]['balance'])) + deposit
+            accounts[username]['balance'] = encrypt(str(new_balance))
             save_accounts(accounts)
             log(f'successfully deposited {deposit} dollars , balance is now {new_balance}', 1)
             break
@@ -64,7 +67,7 @@ def withdraw(username) -> None:
     accounts = get_accounts()
     while True:
         try:
-            balance = accounts[username]['balance']
+            balance = int(decrypt(accounts[username]['balance']))
             log(f'current balance: {balance} ', 2)
             if balance <= 0:
                 log('account has no money ', 2)
@@ -76,8 +79,8 @@ def withdraw(username) -> None:
             if withdraw > balance:
                 log('cannot take out more than account holds ', 2)
                 continue
-            new_balance = accounts[username]['balance']-withdraw
-            accounts[username]['balance'] = new_balance  
+            new_balance = int(decrypt(accounts[username]['balance'])) - withdraw
+            accounts[username]['balance'] = encrypt(str(new_balance))  
             save_accounts(accounts)
             log(f'successfully withdrew {withdraw} dollars , balance is now {new_balance}', 1)
             break
@@ -125,7 +128,7 @@ def change_password(username) -> None:
 
 def show_account_info(username) -> None:
     accounts = get_accounts()
-    log(f'username : {username} \nbalance: {accounts[username]['balance']}', 1)
+    log(f'username : {username} \nbalance: {decrypt(accounts[username]['balance'])}', 1)
 
 def delete_account(username) -> bool:
     accounts = get_accounts()

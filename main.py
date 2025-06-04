@@ -16,6 +16,7 @@ def login() -> None:
         password = getpass.getpass().strip()
 
         if authenticate(username, password):
+            log('successfully logged in ', 1)
             loggedinmainloop(username)
             break
         log('incorrect login credentials', 2)
@@ -45,15 +46,18 @@ def loggedinmainloop(passed_username) -> None:
 
 def mainloop() -> None:
     while True:
-        print('1. create account \n2. login \n3. quit program ')
+        print('1. create account \n2. login \n3. admin mode \n4. quit program ')
         choice = input('choice >> ')
         if choice == '1':
             create_account()
         elif choice == '2':
             login()
         elif choice =='3':
+            admin_authenticate()
+        elif choice =='4':
             log('quitting program... ',1)
             sys.exit()
+
 
 
 if __name__ == '__main__':
