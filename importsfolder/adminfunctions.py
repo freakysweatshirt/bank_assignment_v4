@@ -3,7 +3,7 @@ from .utils import log
 from .storing import decrypt
 from main import loggedinmainloop
 from dotenv import load_dotenv
-import os, getpass
+import os, pwinput
 load_dotenv()
 def show_all_account_info() -> None:
     accounts = get_accounts()
@@ -28,7 +28,7 @@ def edit_account_info() -> None:
         except Exception as e: 
             log(f'error: {e} ', 3)
 def admin_authenticate() -> None:
-    admin_pass = getpass.getpass('admin password >> ')
+    admin_pass = pwinput.pwinput(prompt='admin password >> ', mask='*')
     if os.getenv('ADMIN_PASSWORD') == admin_pass:
         admin_mainloop()
         return 

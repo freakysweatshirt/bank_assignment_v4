@@ -13,7 +13,7 @@ options = {
 def login() -> None: 
     while True:
         username = input('username >> ').strip()
-        password = getpass.getpass().strip()
+        password = pwinput.pwinput(prompt='password >> ', mask='*').strip()
 
         if authenticate(username, password):
             log('successfully logged in ', 1)
