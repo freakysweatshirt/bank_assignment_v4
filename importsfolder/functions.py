@@ -1,4 +1,4 @@
-from .imports import  setpassword, log
+from .imports import  setpassword, log, getpassword
 from .savefunctions import get_accounts, save_accounts
 from .storing import *
 
@@ -21,22 +21,25 @@ def create_account() -> None:
                 log('username cannot be empty', 2)
                 continue
             password = setpassword()
-            balance = int(input('balance >> '))
+            while True:
+                try:
+                    balance = int(input('balance >> '))
+                    if balance < 0:
+                        log('balance must be 0 or more ', 2)
+                        continue
+                    break
+                except ValueError:
+                    log('balance must be a number ', 2)
+                    continue
+                    
             
-
-            if balance < 0:
-                log('balance must be 0 or more ', 2)
-                continue
-
             accounts = get_accounts()
             accounts[username] = { 'password': password, 'balance': encrypt(str(balance))}
             save_accounts(accounts)
 
             log('account successfully created ', 1)
             break
-        except ValueError:
-            log('balance must be a number ', 2)
-            continue
+
         except Exception as e: 
             log(f'error: {e} ', 3)
             break
