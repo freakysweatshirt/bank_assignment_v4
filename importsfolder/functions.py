@@ -1,4 +1,4 @@
-from .imports import  setpassword, log, getpassword
+from .imports import  setpassword, log
 from .savefunctions import get_accounts, save_accounts
 from .storing import *
 

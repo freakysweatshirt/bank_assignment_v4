@@ -7,7 +7,8 @@ options = {
     '4': ('change password',change_password),
     '5': ('show account info', show_account_info),
     '6': ('logout', None), 
-    '7': ('delete account', delete_account)
+    '7': ('delete account', delete_account),
+    '8': ('change config', None)
 }
 
 def login() -> None: 
@@ -40,6 +41,9 @@ def loggedinmainloop(passed_username) -> None:
         elif choice == '7':
             if delete_account(username):
                 break
+            continue
+        elif choice == '8':
+            change_config()
             continue
 
         options[choice][1](username)
